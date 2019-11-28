@@ -39,6 +39,10 @@ paths:
             text/html:
               schema:
                 type: string
+        400:
+          $ref: "#/components/responses/BadRequest"
+        403:
+          $ref: "#/components/responses/Unauthorized"
     post:
       tags:
         - sentiment
@@ -54,6 +58,10 @@ paths:
                 properties:
                   score:
                     type: number
+        400:
+          $ref: "#/components/responses/BadRequest"
+        403:
+          $ref: "#/components/responses/Unauthorized"
 components:
   securitySchemes:
     twitter:
@@ -68,10 +76,14 @@ components:
       type: oauth2
       flows:
         authorizationCode:
-          authorizationUrl: ""
-          tokenUrl: ""
+          authorizationUrl: "https://graph.facebook.com/v5.0/dialog/oauth"
+          tokenUrl: "https://graph.facebook.com/v5.0/oauth/access_token"
+          scopes:
+            user_posts: Gets all timeline posts from an user
         implicit:
-          authorizationUrl: ""
+          authorizationUrl: "https://graph.facebook.com/v5.0/dialog/oauth"
+          scopes:
+            user_posts: Gets all timeline posts from an user
   schemas:
     Provider:
       type: string

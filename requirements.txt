@@ -1,1 +1,4 @@
 azure-functions
+requests
+flair
+torch
