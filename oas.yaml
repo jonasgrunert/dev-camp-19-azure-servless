@@ -1,0 +1,103 @@
+openapi: "3.0.0"
+info:
+  title: devcamp-19-azure-serverless
+  description: Sentiment anaylsis service using azure functions for demonstration purposes.
+  version: "1.0"
+  contact:
+    name: Envision Team
+    url: https://github.com/difreg/dev-camp-19-azure-serverless
+servers:
+  - url: ""
+tags:
+  - name: sentiment
+
+paths:
+  /sentiment/{provider}:
+    parameters:
+      - name: provider
+        in: path
+        schema:
+          $ref: "#/components/schemas/Provider"
+        required: true
+        description: "Determine which network should be used"
+        example: twitter
+      - name: amount
+        in: query
+        schema:
+          type: number
+          default: 100
+          description: "How many of you last posts should be analyzed"
+    get:
+      tags:
+        - sentiment
+      summary: Get a sentiment analysis in html form.
+      operationId: ""
+      responses:
+        200:
+          description: Ok
+          content:
+            text/html:
+              schema:
+                type: string
+    post:
+      tags:
+        - sentiment
+      summary: Get a sentiment analysis in json form.
+      operationId: ""
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  score:
+                    type: number
+components:
+  securitySchemes:
+    twitter:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ""
+          tokenUrl: ""
+        implicit:
+          authorizationUrl: ""
+    facebook:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ""
+          tokenUrl: ""
+        implicit:
+          authorizationUrl: ""
+  schemas:
+    Provider:
+      type: string
+      enum:
+        - facebook
+        - twitter
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+  responses:
+    BadRequest:
+      description: The provider parameter was not set or not one of facebook ot twitter
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Unauthorized:
+      description: No header parameter Authorization found with type Bearer
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
