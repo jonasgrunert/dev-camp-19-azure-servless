@@ -20,13 +20,13 @@ paths:
           $ref: "#/components/schemas/Provider"
         required: true
         description: "Determine which network should be used"
-        example: twitter
+        example: spotify
       - name: amount
         in: query
         schema:
           type: number
           default: 100
-          description: "How many of you last posts should be analyzed"
+          description: "How many of you last posts/tracks should be analyzed"
     get:
       tags:
         - sentiment
@@ -64,14 +64,21 @@ paths:
           $ref: "#/components/responses/Unauthorized"
 components:
   securitySchemes:
-    twitter:
+    spotify:
       type: oauth2
       flows:
         authorizationCode:
-          authorizationUrl: ""
-          tokenUrl: ""
+          authorizationUrl: "https://accounts.spotify.com/authorize"
+          tokenUrl: "https://accounts.spotify.com/api/token"
+          scopes:
+            user-read-recently-played: "Gets all recently played songs from an user"
+            user-top-read: "Gets all top rated songs from an user (most played)"
         implicit:
-          authorizationUrl: ""
+          authorizationUrl: "https://accounts.spotify.com/authorize"
+          scopes:
+            user-read-recently-played: "Gets all recently played songs from an user"
+            user-top-read: "Gets all top rated songs from an user (most played)"
+
     facebook:
       type: oauth2
       flows:
@@ -89,7 +96,7 @@ components:
       type: string
       enum:
         - facebook
-        - twitter
+        - spotify
     Error:
       type: object
       properties:
