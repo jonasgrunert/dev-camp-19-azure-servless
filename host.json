@@ -1,6 +1,8 @@
 {
   "version": "2.0",
-  "http": {
-    "routePrefix": "sentiment"
+  "extensions": {
+    "http": {
+      "routePrefix": "sentiment"
+    }
   }
 }
