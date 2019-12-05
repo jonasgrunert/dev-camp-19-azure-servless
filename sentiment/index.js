@@ -27,9 +27,12 @@ module.exports = async function(context, req) {
     return;
   }
   const language = req.params.language || "en";
-  const res = await axios.get(
-    `https://graph.facebook.com/v5.0/me/posts?fields=message&access_token=${token}`
-  );
+  const res = await axios.get("https://graph.facebook.com/v5.0/me/posts", {
+    params: {
+      fields: "message",
+      access_token: token
+    }
+  });
   const documents = res.data.data
     .filter(i => !!i.message)
     .map((x, i) => ({
@@ -37,14 +40,17 @@ module.exports = async function(context, req) {
       language: language,
       text: x.message
     }));
-  const sentiments = await axios.post(sentiment_url, {
-    headers: {
-      "Ocp-Apim-Subscription-Key": subscriptionKey
-    },
-    data: {
+  const sentiments = await axios.post(
+    sentiment_url,
+    {
       documents
+    },
+    {
+      headers: {
+        "Ocp-Apim-Subscription-Key": subscriptionKey
+      }
     }
-  });
+  );
   if (sentiments.errors.length != 0) {
     context.res = {
       status: 500,
