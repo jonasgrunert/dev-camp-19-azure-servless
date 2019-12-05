@@ -22,7 +22,7 @@ module.exports = async function(context, req) {
       headers: {
         "Content-Type": "application/json"
       },
-      code: 403
+      status: 403
     };
     return;
   }
