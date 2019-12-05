@@ -14,7 +14,7 @@ const sentiment_url = endpoint + "/text/analytics/v2.1/sentiment";
 module.exports = async function(context, req) {
   const token =
     req.headers.authorization ||
-    req.headers["X-MS-TOKEN-FACEBOOK-ACCESS-TOKEN"];
+    req.headers["x-ms-token-facebook-access-token"];
   if (!token) {
     context.res = {
       body: JSON.stringify({
@@ -22,8 +22,7 @@ module.exports = async function(context, req) {
         message: "No Authorization header found"
       }),
       headers: {
-        "Content-Type": "application/json",
-        ...req.headers
+        "Content-Type": "application/json"
       },
       status: 403
     };
