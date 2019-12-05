@@ -62,7 +62,17 @@ module.exports = async function(context, req) {
     return;
   }
   const data = sentiments.data.documents.map((d, i) => ({
-    [documents[i].text]: d
+    [documents[i].text]: {
+      meaning:
+        d.score > 0.5
+          ? d.score > 0.75
+            ? "very positive"
+            : "positive"
+          : d.score < 0.25
+          ? "very negative"
+          : "negative",
+      score: d.score
+    }
   }));
   context.res = {
     body: JSON.stringify(data),
