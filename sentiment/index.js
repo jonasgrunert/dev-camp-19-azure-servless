@@ -12,7 +12,9 @@ const endpoint = process.env.TEXT_ANALYTICS_ENDPOINT;
 const sentiment_url = endpoint + "/text/analytics/v2.1/sentiment";
 
 module.exports = async function(context, req) {
-  const token = req.headers.authorization;
+  const token =
+    req.headers.authorization ||
+    req.headers["X-MS-TOKEN-FACEBOOK-ACCESS-TOKEN"];
   if (!token) {
     context.res = {
       body: JSON.stringify({
