@@ -65,7 +65,8 @@ module.exports = async function(context, req) {
     [documents[i].text]: d
   }));
   context.res = {
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }
   };
   return;
 };
