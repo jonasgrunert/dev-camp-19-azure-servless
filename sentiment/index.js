@@ -22,7 +22,8 @@ module.exports = async function(context, req) {
         message: "No Authorization header found"
       }),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        ...req.headers
       },
       status: 403
     };
