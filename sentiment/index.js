@@ -51,18 +51,19 @@ module.exports = async function(context, req) {
       }
     }
   );
-  if (sentiments.errors.length != 0) {
+  if (sentiments.data.errors.length != 0) {
     context.res = {
       status: 500,
-      body: JSON.stringify(sentiments.errors),
+      body: JSON.stringify(sentiments.data.errors),
       headers: { "Content-Type": "application/json" }
     };
     return;
   }
-  const data = sentiments.documents.map((d, i) => ({ [documents[i].text]: d }));
-  if (req.query.name || (req.body && req.body.name)) {
-    context.res = {
-      body: JSON.stringify(data)
-    };
-  }
+  const data = sentiments.data.documents.map((d, i) => ({
+    [documents[i].text]: d
+  }));
+  context.res = {
+    body: JSON.stringify(data)
+  };
+  return;
 };
