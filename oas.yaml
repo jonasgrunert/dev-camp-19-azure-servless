@@ -64,21 +64,6 @@ paths:
           $ref: "#/components/responses/Unauthorized"
 components:
   securitySchemes:
-    spotify:
-      type: oauth2
-      flows:
-        authorizationCode:
-          authorizationUrl: "https://accounts.spotify.com/authorize"
-          tokenUrl: "https://accounts.spotify.com/api/token"
-          scopes:
-            user-read-recently-played: "Gets all recently played songs from an user"
-            user-top-read: "Gets all top rated songs from an user (most played)"
-        implicit:
-          authorizationUrl: "https://accounts.spotify.com/authorize"
-          scopes:
-            user-read-recently-played: "Gets all recently played songs from an user"
-            user-top-read: "Gets all top rated songs from an user (most played)"
-
     facebook:
       type: oauth2
       flows:
@@ -92,6 +77,11 @@ components:
           scopes:
             user_posts: Gets all timeline posts from an user
   schemas:
+    Date:
+      type: string
+      description: "Formatted as ISO Date String"
+      example: "2019/12/06T12:00:00"
+      regex:
     Provider:
       type: string
       enum:
